@@ -1,12 +1,15 @@
 ARGS=50000 500000
 
-all: genprime-java genprime-c genprime-py genprime-objc genprime-cpp
+all: genprime-java genprime-c genprime-py genprime-objc genprime-cpp genprime-cs
 
 clean:
-	rm -f genprime.pyc genprime.class genprime-objc genprime-c genprime-cpp
+	rm -f genprime.pyc genprime.class genprime-objc genprime-c genprime-cpp genprime-cs
 
 version:
+	gmcs --version
+	mono --version
 	gcc -v
+	g++ -v
 	java -version
 	perl -v | grep built\ for
 	php --version
@@ -19,6 +22,9 @@ run: all
 	@echo
 	@echo "genprime (C++)"
 	@./genprime-cpp $(ARGS)
+	@echo
+	@echo "genprime (C#)"
+	@mono genprime-cs.exe $(ARGS)
 	@echo
 	@echo "genprime (Java)"
 	@java genprime $(ARGS)
@@ -51,6 +57,11 @@ genprime-c: genprime.c
 
 genprime-cpp: genprime.cpp
 	g++ -O3 -std=c++98 -pedantic -Wall -o genprime-cpp genprime.cpp
+
+genprime-cs: genprime-cs.exe
+
+genprime-cs.exe: genprime.cs
+	gmcs -out:genprime-cs.exe -optimize+ genprime.cs
 
 genprime-py: genprime.pyc
 
