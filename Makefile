@@ -3,7 +3,7 @@ ARGS=50000 500000
 all: genprime-java genprime-c genprime-py genprime-objc genprime-cpp genprime-cs
 
 clean:
-	rm -f genprime.pyc genprime.class genprime-objc genprime-c genprime-cpp genprime-cs
+	rm -f genprime.pyc genprime.class genprime-objc genprime-c genprime-cpp genprime-cs.exe
 
 version:
 	gmcs --version
