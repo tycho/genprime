@@ -48,10 +48,14 @@ function record(primes, time) {
     document.getElementById("console").innerHTML += "Found " + primes + " primes in " + time / 1000.0 + " seconds<br />";
 }
 
-var start = 25000;
-var stop = 250000;
+
+//var start = 25000;
+//var stop = 250000;
+var start = 10000;
+var stop = 100000;
 var x;
 
+document.getElementById("console").innerHTML += "genprime (JavaScript)<br />";
 function nextTest()
 {
 	if (x > stop)
