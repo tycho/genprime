@@ -1,9 +1,9 @@
 ARGS=50000 500000
 
-all: genprime-java genprime-c genprime-py genprime-objc
+all: genprime-java genprime-c genprime-py genprime-objc genprime-cpp
 
 clean:
-	rm -f genprime.pyc genprime.class genprime-objc genprime-c
+	rm -f genprime.pyc genprime.class genprime-objc genprime-c genprime-cpp
 
 version:
 	gcc -v
@@ -16,6 +16,9 @@ version:
 run: all
 	@echo "genprime (C)"
 	@./genprime-c $(ARGS)
+	@echo
+	@echo "genprime (C++)"
+	@./genprime-cpp $(ARGS)
 	@echo
 	@echo "genprime (Java)"
 	@java genprime $(ARGS)
@@ -45,6 +48,9 @@ genprime-objc: genprime.m
 
 genprime-c: genprime.c
 	gcc -O3 -ansi -pedantic -Wall -o genprime-c genprime.c
+
+genprime-cpp: genprime.cpp
+	g++ -O3 -std=c++98 -pedantic -Wall -o genprime-cpp genprime.cpp
 
 genprime-py: genprime.pyc
 
