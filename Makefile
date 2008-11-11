@@ -1,4 +1,4 @@
-ARGS="25000 100000"
+ARGS=25000 100000
 
 all: genprime-java genprime-c genprime-py
 
@@ -8,12 +8,16 @@ clean:
 run: all
 	@echo "genprime (C)"
 	@./genprime $(ARGS)
+	@echo
 	@echo "genprime (Java)"
 	@java genprime $(ARGS)
+	@echo
 	@echo "genprime (PHP)"
 	@php genprime.php $(ARGS)
+	@echo
 	@echo "genprime (Python)"
 	@python genprime.pyc $(ARGS)
+	@echo
 	@echo "genprime (Ruby)"
 	@ruby genprime.rb $(ARGS)
 	
