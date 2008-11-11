@@ -1,9 +1,17 @@
-ARGS=25000 100000
+ARGS=50000 500000
 
 all: genprime-java genprime-c genprime-py
 
 clean:
 	rm -f genprime.pyc genprime.class genprime
+
+version:
+	gcc -v
+	java -version
+	perl -v | grep built\ for
+	php --version
+	python --version
+	ruby --version
 
 run: all
 	@echo "genprime (C)"
