@@ -46,7 +46,7 @@ public class genprime {
 			genprime(x);
 			long endtime = System.nanoTime();
 			double duration = ((double)endtime - (double)starttime) / 1000000000.0;
-			System.out.println ( "Found " + x + " primes in " + duration + " seconds" );
+			System.out.printf ("Found %8d primes in %10.5f seconds\n", x, duration);
 		}
 	}
 }

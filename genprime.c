@@ -59,7 +59,7 @@ int main(int argc, char **argv)
 		gettimeofday(&end, NULL);
 		duration = (double)(end.tv_sec - begin.tv_sec) +
 			((double)(end.tv_usec) - (double)(begin.tv_usec)) / 1000000.0;
-		printf ("Found %lu primes in %f seconds\n", x, (float)duration);
+		printf ("Found %8lu primes in %10.5f seconds\n", x, (float)duration);
 	}
 	return 0;
 }

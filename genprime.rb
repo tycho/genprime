@@ -44,13 +44,16 @@ def genprime(max)
 end
 
 start = ARGV[0].to_i
-stop = ARGV[1].to_i
+stop = ARGV[1].to_i + 1
 i = start
-until i > stop
+if start == 0
+	Process.exit
+end
+until i >= stop
 	starttime = Time.now
 	genprime(i)
 	endtime = Time.now
 	duration = endtime - starttime
-	printf "Found %d primes in %f seconds\n", i, duration
+	printf "Found %8d primes in %10.5f seconds\n", i, duration
 	i += start
 end

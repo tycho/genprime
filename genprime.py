@@ -53,14 +53,17 @@ def main():
 	except ImportError:
 		pass
 	"""
-	start=int(sys.argv[1])
-	stop=int(sys.argv[2])+1
+	try:
+		start=int(sys.argv[1])
+		stop=int(sys.argv[2])+1
+	except IndexError:
+		quit()
 	for x in range(start, stop, start):
 		begin = time.clock()
 		genprime(x)
 		end = time.clock()
 		duration = end - begin
-		print 'Found %(count)d primes in %(time)f seconds' % {'count': x, 'time': duration}
+		print 'Found %(count)8d primes in %(time)10.5f seconds' % {'count': x, 'time': duration}
 
 if __name__ == "__main__":
 	main()

@@ -45,7 +45,7 @@ for ($x = $start; $x < $stop; $x += $start)
 	genprime($x);
 	$end = microtime(true);
 	$duration = $end - $begin;
-	printf ("Found %d primes in %f seconds\n", $x, $duration);
+	printf ("Found %8d primes in %10.5f seconds\n", $x, $duration);
 }
 
 ?>
