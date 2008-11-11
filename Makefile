@@ -41,7 +41,7 @@ genprime.class: genprime.java
 	javac genprime.java
 
 genprime-objc: genprime.m
-	gcc -O3 -pedantic -Wall -o genprime-objc genprime.m
+	gcc -O3 -pedantic -Wall -framework AppKit -o genprime-objc genprime.m
 
 genprime-c: genprime.c
 	gcc -O3 -ansi -pedantic -Wall -o genprime-c genprime.c
