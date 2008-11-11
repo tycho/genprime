@@ -12,6 +12,9 @@ run: all
 	@echo "genprime (Java)"
 	@java genprime $(ARGS)
 	@echo
+	@echo "genprime (Perl)"
+	@perl genprime.pl $(ARGS)
+	@echo
 	@echo "genprime (PHP)"
 	@php genprime.php $(ARGS)
 	@echo
