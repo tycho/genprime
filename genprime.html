@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<head>
+<title>GenPrime JavaScript</title>
+</head>
+<body>
+<div id="console">
+</div>
+<script type="text/javascript">
+function isprime(x)
+{
+	var y;
+	var lim;
+	if (x < 2)
+		return false;
+	if (x < 4)
+		return true;
+	if (x == 5)
+		return true;
+	if (x % 2 == 0)
+		return false;
+	if (x % 5 == 0)
+		return false;
+	if ((x + 1) % 6 != 0)
+		if ((x - 1) % 6 != 0)
+			return false;
+	lim = Math.sqrt(x) + 1.0;
+	for (y = 3; y < lim; y += 2)
+	{
+		if (x % y == 0)
+			return false;
+	}
+	return true;
+}
+
+function genprime(max)
+{
+	var count = 0;
+	var current = 1;
+	while (count < max)
+	{
+		if (isprime(current))
+			count++;
+		current++;
+	}
+}
+
+function record(primes, time) {
+    document.getElementById("console").innerHTML += "Found " + primes + " primes in " + time / 1000.0 + " seconds<br />";
+}
+
+var start = 25000;
+var stop = 250000;
+var x;
+
+function nextTest()
+{
+	if (x > stop)
+		return;
+	var startDate = new Date();
+	genprime(x);
+	var endDate = new Date();
+	var duration = endDate - startDate;
+	record(x, duration);
+	x += start;
+	setTimeout(nextTest, 1);
+}
+
+x = start;
+nextTest()
+</script>
+</body>
+</html>
