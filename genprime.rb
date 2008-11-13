@@ -36,7 +36,7 @@ def genprime(max)
 	count = 0
 	current = 1
 	while count<max
-		if isprime(current)
+		if isprime(current) != 0
 			count += 1
 		end
 		current += 1
