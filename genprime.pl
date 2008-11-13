@@ -49,9 +49,8 @@ sub genprime {
 		}
 		$current = $current + 1;
 	}
+	return $current - 1;
 }
-
-my $start, $stop, $argc, $x;
 
 $argc = @ARGV + 1;
 
@@ -69,8 +68,9 @@ if ($argc > 2) {
 for ($x = $start; $x < $stop; $x = $x + $start)
 {
 	$begin = Time::HiRes::time();
-	genprime($x);
+	$last = genprime($x);
 	$end = Time::HiRes::time();
 	$duration = $end - $begin;
-	printf ("Found %8d primes in %10.5f seconds\n", $x, $duration);
+	printf ("Found %8d primes in %10.5f seconds (last was %10d)\n",
+		$x, $duration, $last);
 }

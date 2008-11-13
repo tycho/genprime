@@ -42,10 +42,11 @@ function genprime(max)
 			count++;
 		current++;
 	}
+	return current - 1;
 }
 
-function record(primes, time) {
-    document.getElementById("console").innerHTML += "Found " + primes + " primes in " + time / 1000.0 + " seconds<br />";
+function record(primes, time, last) {
+    document.getElementById("console").innerHTML += "Found " + primes + " primes in " + time / 1000.0 + " seconds (last was " + last + ")<br />";
 }
 
 
@@ -61,12 +62,12 @@ function nextTest()
 	if (x > stop)
 		return;
 	var startDate = new Date();
-	genprime(x);
+	var last = genprime(x);
 	var endDate = new Date();
 	var duration = endDate - startDate;
 	record(x, duration);
 	x += start;
-	setTimeout(nextTest, 1);
+	setTimeout(nextTest, 1, last);
 }
 
 x = start;

@@ -35,7 +35,7 @@ namespace GenPrime
 			return true;
 		}
 		
-		private static void genprime(ulong max)
+		private static ulong genprime(ulong max)
 		{
 			ulong count = 0,
 			     current = 1;
@@ -45,19 +45,21 @@ namespace GenPrime
 					count++;
 				current++;
 			}
+			return current - 1;
 		}
 
 		public static void Main(string[] args)
 		{
-	                ulong start = ulong.Parse(args[0]), stop = ulong.Parse(args[1]) + 1;
+	                ulong start = ulong.Parse(args[0]), stop = ulong.Parse(args[1]) + 1, last;
 			Stopwatch sw = new Stopwatch();
 	                for ( ulong x = start; x < stop; x += start )
 	                {
 	                        sw.Start();
-	                        genprime(x);
+				last = genprime(x);
 	                        sw.Stop();
 				double duration = (double)sw.ElapsedTicks / (double)Stopwatch.Frequency;
-				Console.WriteLine( "Found {0,8} primes in {1,10:0.00000} seconds", x, duration);
+				Console.WriteLine( "Found {0,8} primes in {1,10:0.00000} seconds (last was {2,10})",
+					x, duration, last);
 	                }
 		}
 	}

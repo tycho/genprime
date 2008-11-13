@@ -35,6 +35,7 @@ function genprime($max)
 			$count++;
 		$current++;
 	}
+	return $current - 1;
 }
 
 $start = $argc > 1 ? (int)($argv[1]) : 0;
@@ -42,10 +43,11 @@ $stop = $argc > 2 ? (int)($argv[2]) + 1 : 0;
 for ($x = $start; $x < $stop; $x += $start)
 {
 	$begin = microtime(true);
-	genprime($x);
+	$last = genprime($x);
 	$end = microtime(true);
 	$duration = $end - $begin;
-	printf ("Found %8d primes in %10.5f seconds\n", $x, $duration);
+	printf ("Found %8d primes in %10.5f seconds (last was %10d)\n",
+		$x, $duration, $last);
 }
 
 ?>

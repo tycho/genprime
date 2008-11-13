@@ -33,7 +33,7 @@ public:
 		return true;
 	}
 	
-	void genprime(prime_t max)
+	prime_t genprime(prime_t max)
 	{
 		prime_t count = 0,
 			current = 1;
@@ -43,6 +43,7 @@ public:
 				count++;
 			current++;
 		}
+		return current - 1;
 	}
 };
 
@@ -50,18 +51,19 @@ int main(int argc, char **argv)
 {
 	prime_t start = argc > 1 ? atol(argv[1]) : 0,
 		stop = argc > 2 ? atol(argv[2]) + 1 : 0,
-		x;
+		x, last;
 	struct timeval begin, end;
 	double duration;
 	GenPrime gp;
 	for (x = start; x < stop; x += start)
 	{
 		gettimeofday(&begin, NULL);
-		gp.genprime(x);
+		last = gp.genprime(x);
 		gettimeofday(&end, NULL);
 		duration = (double)(end.tv_sec - begin.tv_sec) +
 			((double)(end.tv_usec) - (double)(begin.tv_usec)) / 1000000.0;
-		printf ("Found %8lu primes in %10.5f seconds\n", x, (float)duration);
+		printf ("Found %8lu primes in %10.5f seconds (last was %10lu\n",
+			x, (float)duration, last);
 	}
 	return 0;
 }

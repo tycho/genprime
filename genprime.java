@@ -24,7 +24,7 @@ public class genprime {
 		return true;
 	}
 	
-	private static void genprime(long max)
+	private static long genprime(long max)
 	{
 		long count = 0,
 		     current = 1;
@@ -33,20 +33,23 @@ public class genprime {
 			if (isprime(current))
 				count++;
 			current++;
-		}	
+		}
+		return current - 1;
 	}
 
 	public static void main(String[] args)
 	{
 		long start = Long.parseLong(args[0]),
-		stop = Long.parseLong(args[1]) + 1;
+		stop = Long.parseLong(args[1]) + 1,
+		last;
 		for ( long x = start; x < stop; x += start )
 		{
 			long starttime = System.nanoTime();
-			genprime(x);
+			last = genprime(x);
 			long endtime = System.nanoTime();
 			double duration = ((double)endtime - (double)starttime) / 1000000000.0;
-			System.out.printf ("Found %8d primes in %10.5f seconds\n", x, duration);
+			System.out.printf ("Found %8d primes in %10.5f seconds (last was %10d)\n",
+				x, duration, last);
 		}
 	}
 }

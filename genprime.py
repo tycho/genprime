@@ -44,6 +44,7 @@ def genprime(max):
 		if isprime(current):
 			count = count + 1
 		current = current + 1
+	return current - 1
 
 def main():
 	"""
@@ -60,10 +61,10 @@ def main():
 		quit()
 	for x in range(start, stop, start):
 		begin = time.clock()
-		genprime(x)
+		last = genprime(x)
 		end = time.clock()
 		duration = end - begin
-		print 'Found %(count)8d primes in %(time)10.5f seconds' % {'count': x, 'time': duration}
+		print 'Found %(count)8d primes in %(time)10.5f seconds (last was %(last)10d)' % {'count': x, 'time': duration, 'last': last}
 
 if __name__ == "__main__":
 	main()

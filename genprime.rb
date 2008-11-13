@@ -41,6 +41,7 @@ def genprime(max)
 		end
 		current += 1
 	end
+	return current - 1
 end
 
 start = ARGV[0].to_i
@@ -51,9 +52,9 @@ if start == 0
 end
 until i >= stop
 	starttime = Time.now
-	genprime(i)
+	last = genprime(i)
 	endtime = Time.now
 	duration = endtime - starttime
-	printf "Found %8d primes in %10.5f seconds\n", i, duration
+	printf "Found %8d primes in %10.5f seconds (last was %10d)\n", i, duration, last
 	i += start
 end
