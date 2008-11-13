@@ -1,5 +1,8 @@
+*.s
 genprime-cs.exe
 genprime-c
+genprime-c-llvm
+genprime-c-clang
 genprime-cpp
 genprime-objc
 genprime.class
