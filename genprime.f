@@ -1,13 +1,3 @@
-C  Genprime.f
-C  Copyright(c) 2008, ME
-C  
-C  You may use this file in any way you like.
-C  Print it out and use it as nesting material
-C    for your rabbit, I don't care.
-C
-C       I'm using integer here due to inconsistancies in
-C       Fortran LOGICAL datatype and Fortran FUNCTIONs.
-C
         INTEGER FUNCTION ISPRIME(X)
         INTEGER*8 LIM, Y, X
         IF(X.lt.2) THEN
