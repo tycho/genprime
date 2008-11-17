@@ -4,7 +4,7 @@ ARGS=250000 1000000
 all: genprime-java genprime-c genprime-py genprime-objc genprime-cpp genprime-cs genprime-c-llvm genprime-c-clang
 
 clean:
-	rm -f genprime.pyc genprime.class genprime-objc genprime-c genprime-cpp genprime-cs.exe genprime-c-llvm gnprime-c-clang *.s
+	rm -f genprime.pyc genprime.class genprime-objc genprime-c genprime-cpp genprime-cs.exe genprime-c-llvm genprime-c-clang *.s *.bc *.ll
 
 version:
 	@echo
@@ -38,8 +38,14 @@ run: all
 	@echo "genprime (C LLVM)"
 	@-./genprime-c-llvm $(ARGS)
 	@echo
+	@echo "genprime (C LLVM JIT)"
+	@-lli genprime-c-llvm.bc $(ARGS)
+	@echo
 	@echo "genprime (C Clang/LLVM)"
 	@-./genprime-c-clang $(ARGS)
+	@echo
+	@echo "genprime (C Clang/LLVM JIT)"
+	@-lli genprime-c-clang.bc $(ARGS)
 	@echo
 	@echo "genprime (C++)"
 	@-./genprime-cpp $(ARGS)
@@ -79,11 +85,15 @@ genprime-c: genprime.c
 	-gcc -O3 -pipe -o genprime-c genprime-c.s
 
 genprime-c-llvm: genprime.c
-	-llvm-gcc-4.2 -O3 -ansi -pedantic -Wall -S -o genprime-c-llvm.s genprime.c
+	-gcc -O3 -ansi -pedantic -Wall -emit-llvm -S -o genprime-c-llvm.ll genprime.c
+	-llvm-as genprime-c-llvm.ll
+	-cat genprime-c-llvm.bc | opt -std-compile-opts | llc > genprime-c-llvm.s
 	-gcc -O3 -pipe -o genprime-c-llvm genprime-c-llvm.s
 
 genprime-c-clang: genprime.c
-	-clang genprime.c -emit-llvm -o - | llvm-as | opt -std-compile-opts | llc > genprime-c-clang.s
+	-clang genprime.c -emit-llvm -o genprime-c-clang.ll
+	-llvm-as genprime-c-clang.ll
+	-cat genprime-c-clang.bc | opt -std-compile-opts | llc > genprime-c-clang.s
 	-gcc -O3 -pipe -o genprime-c-clang genprime-c-clang.s
 
 genprime-cpp: genprime.cpp
