@@ -1,4 +1,3 @@
-
 ARGS=250000 1000000
 
 all: genprime-java genprime-c genprime-py genprime-objc genprime-cpp genprime-cs genprime-c-llvm genprime-c-clang
