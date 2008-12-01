@@ -1,9 +1,9 @@
 ARGS=250000 1000000
 
-all: genprime-java genprime-c genprime-py genprime-objc genprime-cpp genprime-cs genprime-c-llvm genprime-c-clang
+all: genprime-java genprime-c genprime-py genprime-objc genprime-cpp genprime-cs genprime-c-llvm genprime-c-clang genprime-fortran-llvm
 
 clean:
-	rm -f genprime.pyc genprime.class genprime-objc genprime-c genprime-cpp genprime-cs.exe genprime-c-llvm genprime-c-clang *.s *.bc *.ll
+	rm -f genprime.pyc genprime.class genprime-objc genprime-c genprime-cpp genprime-cs.exe genprime-c-llvm genprime-c-clang genprime-fortran-llvm *.s *.bc *.ll
 
 version:
 	@echo
@@ -13,7 +13,9 @@ version:
 	@echo
 	-llc -version
 	@echo
-	-llvm-gcc-4.2 -v
+	-llvm-gcc -v
+	@echo
+	-llvm-gfortran -v
 	@echo
 	-gcc -v
 	@echo
@@ -52,8 +54,14 @@ run: all
 	@echo "genprime (C#)"
 	@-mono genprime-cs.exe $(ARGS)
 	@echo
+	@echo "genprime (Fortran LLVM)"
+	@-./genprime-fortran-llvm $(ARGS)
+	@echo
 	@echo "genprime (Java)"
 	@-java genprime $(ARGS)
+	@echo
+	@echo "genprime (Lua)"
+	@-lua genprime.lua $(ARGS)
 	@echo
 	@echo "genprime (Objective-C)"
 	@-./genprime-objc $(ARGS)
@@ -76,18 +84,18 @@ genprime.class: genprime.java
 	-javac genprime.java
 
 genprime-objc: genprime.m
-	-gcc -O3 -pipe -pedantic -Wall -S -o genprime-objc.s genprime.m
-	-gcc -O3 -pipe -framework AppKit -o genprime-objc genprime-objc.s
+	-/Developer/usr/bin/gcc -O3 -pipe -pedantic -Wall -S -o genprime-objc.s genprime.m
+	-/Developer/usr/bin/gcc -O3 -pipe -framework AppKit -o genprime-objc genprime-objc.s
 
 genprime-c: genprime.c
 	-gcc -O3 -pipe -ansi -pedantic -Wall -S -o genprime-c.s genprime.c
 	-gcc -O3 -pipe -o genprime-c genprime-c.s
 
 genprime-c-llvm: genprime.c
-	-gcc -O3 -ansi -pedantic -Wall -emit-llvm -S -o genprime-c-llvm.ll genprime.c
+	-llvm-gcc -O3 -ansi -pedantic -Wall -emit-llvm -S -o genprime-c-llvm.ll genprime.c
 	-llvm-as genprime-c-llvm.ll
 	-cat genprime-c-llvm.bc | opt -std-compile-opts | llc > genprime-c-llvm.s
-	-gcc -O3 -pipe -o genprime-c-llvm genprime-c-llvm.s
+	-llvm-gcc -O3 -pipe -o genprime-c-llvm genprime-c-llvm.s
 
 genprime-c-clang: genprime.c
 	-clang genprime.c -emit-llvm -o genprime-c-clang.ll
@@ -96,13 +104,16 @@ genprime-c-clang: genprime.c
 	-gcc -O3 -pipe -o genprime-c-clang genprime-c-clang.s
 
 genprime-cpp: genprime.cpp
-	-g++ -O3 -pipe -std=c++98 -pedantic -Wall -S -o genprime-cpp.s genprime.cpp
+	-g++ -O3 -pipe -std=gnu++98 -pedantic -Wall -S -o genprime-cpp.s genprime.cpp
 	-g++ -O3 -pipe -o genprime-cpp genprime-cpp.s
 
 genprime-cs: genprime-cs.exe
 
 genprime-cs.exe: genprime.cs
 	-gmcs -out:genprime-cs.exe -optimize+ genprime.cs
+
+genprime-fortran-llvm: genprime.f
+	-llvm-gfortran -O3 -pipe -o genprime-fortran-llvm genprime.f
 
 genprime-py: genprime.pyc
 
