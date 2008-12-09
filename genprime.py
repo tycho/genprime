@@ -64,7 +64,7 @@ def main():
 		last = genprime(x)
 		end = time.clock()
 		duration = end - begin
-		print 'Found %(count)8d primes in %(time)10.5f seconds (last was %(last)10d)' % {'count': x, 'time': duration, 'last': last}
+		print('Found %(count)8d primes in %(time)10.5f seconds (last was %(last)10d)' % {'count': x, 'time': duration, 'last': last})
 
 if __name__ == "__main__":
 	main()
