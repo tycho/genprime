@@ -1,9 +1,9 @@
 ARGS=250000 1000000
 
-all: genprime-java genprime-c genprime-py genprime-objc genprime-cpp genprime-cs genprime-c-llvm genprime-c-clang genprime-fortran-llvm
+all: genprime-java genprime-c genprime-py26 genprime-py30 genprime-objc genprime-cpp genprime-cs genprime-c-llvm genprime-c-clang genprime-fortran-llvm
 
 clean:
-	rm -f genprime.pyc genprime.class genprime-objc genprime-c genprime-cpp genprime-cs.exe genprime-c-llvm genprime-c-clang genprime-fortran-llvm *.s *.bc *.ll
+	rm -f genprime.*.py *.pyc *.class genprime-* *.s *.bc *.ll
 
 version:
 	@echo
@@ -27,7 +27,9 @@ version:
 	@echo
 	-php --version
 	@echo
-	-python --version
+	-python2.6 --version
+	@echo
+	-python3.0 --version
 	@echo
 	-ruby --version
 	@echo
@@ -72,8 +74,11 @@ run: all
 	@echo "genprime (PHP)"
 	@-php genprime.php $(ARGS)
 	@echo
-	@echo "genprime (Python)"
-	@-python genprime.pyc $(ARGS)
+	@echo "genprime (Python 2.6)"
+	@-python2.6 genprime.26.pyc $(ARGS)
+	@echo
+	@echo "genprime (Python 3.0)"
+	@-python3.0 genprime.30.pyc $(ARGS)
 	@echo
 	@echo "genprime (Ruby)"
 	@-ruby genprime.rb $(ARGS)
@@ -84,7 +89,7 @@ genprime.class: genprime.java
 	-javac genprime.java
 
 genprime-objc: genprime.m
-	-/Developer/usr/bin/gcc -O3 -pipe -pedantic -Wall -S -o genprime-objc.s genprime.m
+	-/Developer/usr/bin/gcc -O3 -pipe -pedantic -S -o genprime-objc.s genprime.m
 	-/Developer/usr/bin/gcc -O3 -pipe -framework AppKit -o genprime-objc genprime-objc.s
 
 genprime-c: genprime.c
@@ -115,7 +120,14 @@ genprime-cs.exe: genprime.cs
 genprime-fortran-llvm: genprime.f
 	-llvm-gfortran -O3 -pipe -o genprime-fortran-llvm genprime.f
 
-genprime-py: genprime.pyc
+genprime-py26: genprime.26.pyc
 
-genprime.pyc: genprime.py
-	-python -c "import py_compile; py_compile.compile(\"genprime.py\");"
+genprime-py30: genprime.30.pyc
+
+genprime.26.pyc: genprime.py
+	-ln -sf genprime.py genprime.26.py
+	-python2.6 -c "import py_compile; py_compile.compile(\"genprime.26.py\");"
+
+genprime.30.pyc: genprime.py
+	-ln -sf genprime.py genprime.30.py
+	-python3.0 -c "import py_compile; py_compile.compile(\"genprime.30.py\");"
