@@ -46,7 +46,7 @@ function main(startN, endN)
     lastN = genprime(x)
     timeE = os.clock()
 	timeT = timeE - timeS
-    print("Found " .. x .. " primes in " .. timeT .. " seconds (last was " .. lastN .. ")")
+    io.write(string.format("Found %8d primes in %10.5f seconds (last was %10u)\n", x, timeT, lastN))
   end
 end
 
