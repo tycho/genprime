@@ -1,6 +1,6 @@
 ARGS=250000 1000000
 
-all: genprime-java genprime-c genprime-py26 genprime-py30 genprime-objc genprime-cpp genprime-cs genprime-c-llvm genprime-c-clang genprime-fortran-llvm
+all: genprime-java genprime-c genprime-py25 genprime-py30 genprime-objc genprime-cpp genprime-cs genprime-c-llvm genprime-c-icc genprime-c-clang genprime-fortran-llvm
 
 clean:
 	rm -f genprime.*.py *.pyc *.class genprime-* *.s *.bc *.ll
@@ -21,13 +21,15 @@ version:
 	@echo
 	-g++ -v
 	@echo
+	-icc -v
+	@echo
 	-java -version
 	@echo
 	-perl -v | grep built\ for
 	@echo
 	-php --version
 	@echo
-	-python2.6 --version
+	-python2.5 --version
 	@echo
 	-python3.0 --version
 	@echo
@@ -35,7 +37,7 @@ version:
 	@echo
 
 run: all
-	@echo "genprime (C)"
+	@echo "genprime (C GCC)"
 	@-./genprime-c $(ARGS)
 	@echo
 	@echo "genprime (C LLVM)"
@@ -49,6 +51,9 @@ run: all
 	@echo
 	@echo "genprime (C Clang/LLVM JIT)"
 	@-lli genprime-c-clang.bc $(ARGS)
+	@echo
+	@echo "genprime (C Intel Compiler)"
+	@-./genprime-c-icc $(ARGS)
 	@echo
 	@echo "genprime (C++)"
 	@-./genprime-cpp $(ARGS)
@@ -74,8 +79,8 @@ run: all
 	@echo "genprime (PHP)"
 	@-php genprime.php $(ARGS)
 	@echo
-	@echo "genprime (Python 2.6)"
-	@-python2.6 genprime.26.pyc $(ARGS)
+	@echo "genprime (Python 2.5)"
+	@-python2.5 genprime.25.pyc $(ARGS)
 	@echo
 	@echo "genprime (Python 3.0)"
 	@-python3.0 genprime.30.pyc $(ARGS)
@@ -95,6 +100,10 @@ genprime-objc: genprime.m
 genprime-c: genprime.c
 	-gcc -O3 -pipe -ansi -pedantic -Wall -S -o genprime-c.s genprime.c
 	-gcc -O3 -pipe -o genprime-c genprime-c.s
+
+genprime-c-icc: genprime.c
+	-icc -xSSE3 -O3 -pipe -ansi -pedantic -Wall -S -o genprime-c-icc.s genprime.c
+	-icc -xSSE3 -O3 -pipe -o genprime-c-icc genprime-c-icc.s
 
 genprime-c-llvm: genprime.c
 	-llvm-gcc -O3 -ansi -pedantic -Wall -emit-llvm -S -o genprime-c-llvm.ll genprime.c
@@ -120,13 +129,13 @@ genprime-cs.exe: genprime.cs
 genprime-fortran-llvm: genprime.f
 	-llvm-gfortran -O3 -pipe -o genprime-fortran-llvm genprime.f
 
-genprime-py26: genprime.26.pyc
+genprime-py25: genprime.25.pyc
 
 genprime-py30: genprime.30.pyc
 
-genprime.26.pyc: genprime.py
-	-ln -sf genprime.py genprime.26.py
-	-python2.6 -c "import py_compile; py_compile.compile(\"genprime.26.py\");"
+genprime.25.pyc: genprime.py
+	-ln -sf genprime.py genprime.25.py
+	-python2.5 -c "import py_compile; py_compile.compile(\"genprime.25.py\");"
 
 genprime.30.pyc: genprime.py
 	-ln -sf genprime.py genprime.30.py
