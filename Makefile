@@ -11,10 +11,6 @@ version:
 	@echo
 	-mono --version
 	@echo
-	-llc -version
-	@echo
-	-llvm-gcc -v
-	@echo
 	-gcc -v
 	@echo
 	-g++ -v
@@ -22,6 +18,14 @@ version:
 	-icc -v
 	@echo
 	-java -version
+	@echo
+	-llc -version
+	@echo
+	-llvm-gcc -v
+	@echo
+	-lua -v
+	@echo
+	-luajit -v
 	@echo
 	-perl -v | grep built\ for
 	@echo
@@ -64,6 +68,9 @@ run: all
 	@echo
 	@echo "genprime (Lua)"
 	@-lua genprime.lua $(ARGS)
+	@echo
+	@echo "genprime (LuaJIT)"
+	@-luajit genprime.lua $(ARGS)
 	@echo
 	@echo "genprime (Objective-C)"
 	@-./genprime-objc $(ARGS)
