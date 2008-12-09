@@ -1,6 +1,6 @@
 ARGS=250000 1000000
 
-all: genprime-java genprime-c genprime-py25 genprime-py30 genprime-objc genprime-cpp genprime-cs genprime-c-llvm genprime-c-icc genprime-c-clang genprime-fortran-llvm
+all: genprime-java genprime-c genprime-py25 genprime-py30 genprime-objc genprime-cpp genprime-cs genprime-c-llvm genprime-c-icc genprime-c-clang
 
 clean:
 	rm -f genprime.*.py *.pyc *.class genprime-* *.s *.bc *.ll
@@ -14,8 +14,6 @@ version:
 	-llc -version
 	@echo
 	-llvm-gcc -v
-	@echo
-	-llvm-gfortran -v
 	@echo
 	-gcc -v
 	@echo
@@ -60,9 +58,6 @@ run: all
 	@echo
 	@echo "genprime (C#)"
 	@-mono genprime-cs.exe $(ARGS)
-	@echo
-	@echo "genprime (Fortran LLVM)"
-	@-./genprime-fortran-llvm $(ARGS)
 	@echo
 	@echo "genprime (Java)"
 	@-java genprime $(ARGS)
@@ -125,9 +120,6 @@ genprime-cs: genprime-cs.exe
 
 genprime-cs.exe: genprime.cs
 	-gmcs -out:genprime-cs.exe -optimize+ genprime.cs
-
-genprime-fortran-llvm: genprime.f
-	-llvm-gfortran -O3 -pipe -o genprime-fortran-llvm genprime.f
 
 genprime-py25: genprime.25.pyc
 
