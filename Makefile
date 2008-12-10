@@ -3,7 +3,7 @@ ARGS=250000 1000000
 all: genprime-java genprime-c genprime-py25 genprime-py30 genprime-objc genprime-cpp genprime-cs genprime-c-llvm genprime-c-icc genprime-c-clang
 
 clean:
-	rm -f genprime.*.py *.pyc *.class genprime-* *.s *.bc *.ll
+	rm -f genprime.*.py *.pyc *.class genprime-* *.s *.bc *.ll *.rbc
 
 version:
 	@echo
@@ -36,6 +36,8 @@ version:
 	-python3.0 --version
 	@echo
 	-ruby --version
+	@echo
+	-rbx -v
 	@echo
 
 run: all
@@ -89,6 +91,9 @@ run: all
 	@echo
 	@echo "genprime (Ruby)"
 	@-ruby genprime.rb $(ARGS)
+	@echo
+	@echo "genprime (Ruby Rubinius)"
+	@-rbx genprime.rb $(ARGS)
 
 genprime-java: genprime.class
 

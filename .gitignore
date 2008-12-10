@@ -4,3 +4,4 @@
 *.s
 genprime-*
 genprime.*.py
+*.rbc
