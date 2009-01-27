@@ -1,11 +1,13 @@
 ARGS=250000 1000000
 
-all: genprime-java genprime-c genprime-py25 genprime-py30 genprime-objc genprime-cpp genprime-cs genprime-c-llvm genprime-c-icc genprime-c-clang
+all: genprime-java genprime-c genprime-py26 genprime-py30 genprime-objc genprime-cpp genprime-cs genprime-c-llvm genprime-c-icc genprime-c-clang
 
 clean:
 	rm -f genprime.*.py *.pyc *.class genprime-* *.s *.bc *.ll *.rbc
 
 version:
+	@echo
+	-uname -a
 	@echo
 	-gmcs --version
 	@echo
@@ -31,7 +33,7 @@ version:
 	@echo
 	-php --version
 	@echo
-	-python2.5 --version
+	-python2.6 --version
 	@echo
 	-python3.0 --version
 	@echo
@@ -83,8 +85,11 @@ run: all
 	@echo "genprime (PHP)"
 	@-php genprime.php $(ARGS)
 	@echo
-	@echo "genprime (Python 2.5)"
-	@-python2.5 genprime.25.pyc $(ARGS)
+	@echo "genprime (Python 2.6)"
+	@-python2.6 genprime.26.pyc $(ARGS)
+	@echo
+	@echo "genprime (Python 2.6 + Psyco)"
+	@-python2.6 genprime.26.pyc -p $(ARGS)
 	@echo
 	@echo "genprime (Python 3.0)"
 	@-python3.0 genprime.30.pyc $(ARGS)
@@ -133,13 +138,13 @@ genprime-cs: genprime-cs.exe
 genprime-cs.exe: genprime.cs
 	-gmcs -out:genprime-cs.exe -optimize+ genprime.cs
 
-genprime-py25: genprime.25.pyc
+genprime-py26: genprime.26.pyc
 
 genprime-py30: genprime.30.pyc
 
-genprime.25.pyc: genprime.py
-	-ln -sf genprime.py genprime.25.py
-	-python2.5 -c "import py_compile; py_compile.compile(\"genprime.25.py\");"
+genprime.26.pyc: genprime.py
+	-ln -sf genprime.py genprime.26.py
+	-python2.6 -c "import py_compile; py_compile.compile(\"genprime.26.py\");"
 
 genprime.30.pyc: genprime.py
 	-ln -sf genprime.py genprime.30.py

@@ -1,17 +1,4 @@
-#!/usr/bin/python
-"""
-Without psyco:
-Found 25000 primes in 5.770000 seconds
-Found 50000 primes in 15.530000 seconds
-Found 75000 primes in 28.440000 seconds
-Found 100000 primes in 43.810000 seconds
-
-With psyco:
-Found 25000 primes in 1.590000 seconds
-Found 50000 primes in 4.250000 seconds
-Found 75000 primes in 8.130000 seconds
-Found 100000 primes in 12.880000 seconds
-"""
+#!/usr/bin/env python
 
 import time
 import sys
@@ -47,16 +34,14 @@ def genprime(max):
 	return current - 1
 
 def main():
-	"""
-	try:
+	ind=1
+	if sys.argv[1] == '-p':
+		ind = ind + 1
 		import psyco
 		psyco.full()
-	except ImportError:
-		pass
-	"""
 	try:
-		start=int(sys.argv[1])
-		stop=int(sys.argv[2])+1
+		start=int(sys.argv[ind])
+		stop=int(sys.argv[ind + 1])+1
 	except IndexError:
 		quit()
 	for x in range(start, stop, start):
