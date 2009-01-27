@@ -65,7 +65,7 @@ function nextTest()
 	var last = genprime(x);
 	var endDate = new Date();
 	var duration = endDate - startDate;
-	record(x, duration);
+	record(x, duration, last);
 	x += start;
 	setTimeout(nextTest, 1, last);
 }
