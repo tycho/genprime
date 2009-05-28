@@ -17,6 +17,8 @@ version:
 	@echo
 	-g++ -v
 	@echo
+	-gfortran -v
+	@echo
 	-icc -v
 	@echo
 	-java -version
@@ -63,6 +65,9 @@ run: all
 	@echo
 	@echo "genprime (C++)"
 	@-./genprime-cpp $(ARGS)
+	@echo
+	@echo "genprime (F90)"
+	@-./genprime-f90 $(ARGS)
 	@echo
 	@echo "genprime (C#)"
 	@-mono genprime-cs.exe $(ARGS)
@@ -112,6 +117,10 @@ genprime-objc: genprime.m
 genprime-c: genprime.c
 	-gcc -O3 -pipe -ansi -pedantic -Wall -S -o genprime-c.s genprime.c
 	-gcc -O3 -pipe -o genprime-c genprime-c.s
+
+genprime-f90: genprime.f90
+	-gfortran -O3 -pipe -pedantic -Wall -S -o genprime-f90.s genprime.f90
+	-gfortran -O3 -pipe -o genprime-f90 genprime-f90.s
 
 genprime-c-icc: genprime.c
 	-icc -xSSE3 -O3 -pipe -ansi -pedantic -Wall -S -o genprime-c-icc.s genprime.c
