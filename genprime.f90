@@ -4,6 +4,8 @@ program main
   real times, timet, time
   integer(kind=i4b) :: strt, stp, x, z
   character(len=20) :: buffer
+  ! NOTE: getarg is an extension (not strictly F90/95) but is supported in most
+  ! compilers.
   call getarg(1,buffer)
   read(buffer,*) strt
   call getarg(2,buffer)
