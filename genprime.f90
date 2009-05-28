@@ -14,7 +14,7 @@ program main
     Z = genprime(x)
     call cpu_time(timet)
     time = timet - times
-    print *, 'Found ',x,' primes in ',time,' (last was',z,')'
+    print '(a6, i8, a11, f10.5, a19, i10, a)', 'Found ',x,' primes in ',time,' seconds (last was ',z,')'
   end do
 
 contains
