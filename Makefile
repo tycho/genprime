@@ -1,6 +1,6 @@
-ARGS=250000 1000000
+ARGS=25000 100000
 
-all: genprime-java genprime-c genprime-py26 genprime-py30 genprime-objc genprime-cpp genprime-cs genprime-c-llvm genprime-c-icc genprime-c-clang
+all: genprime-java genprime-c genprime-f90 genprime-py26 genprime-py30 genprime-objc genprime-cpp genprime-cs genprime-c-llvm genprime-c-icc genprime-c-clang
 
 clean:
 	rm -f genprime.*.py *.pyc *.class genprime-* *.s *.bc *.ll *.rbc
