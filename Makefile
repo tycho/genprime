@@ -66,11 +66,11 @@ run: all
 	@echo "genprime (C++)"
 	@-./genprime-cpp $(ARGS)
 	@echo
-	@echo "genprime (F90)"
-	@-./genprime-f90 $(ARGS)
-	@echo
 	@echo "genprime (C#)"
 	@-mono genprime-cs.exe $(ARGS)
+	@echo
+	@echo "genprime (F90)"
+	@-./genprime-f90 $(ARGS)
 	@echo
 	@echo "genprime (Java)"
 	@-java genprime $(ARGS)
