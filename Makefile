@@ -109,43 +109,52 @@ genprime-java: genprime.class
 
 genprime.class: genprime.java
 	-javac genprime.java
+	@echo
 
 genprime-objc: genprime.m
 	-/Developer/usr/bin/gcc -O3 -pipe -pedantic -S -o genprime-objc.s genprime.m
 	-/Developer/usr/bin/gcc -O3 -pipe -framework AppKit -o genprime-objc genprime-objc.s
+	@echo
 
 genprime-c: genprime.c
 	-gcc -O3 -pipe -ansi -pedantic -Wall -S -o genprime-c.s genprime.c
 	-gcc -O3 -pipe -o genprime-c genprime-c.s
+	@echo
 
 genprime-f90: genprime.f90
 	-gfortran -O3 -pipe -pedantic -Wall -S -o genprime-f90.s genprime.f90
 	-gfortran -O3 -pipe -o genprime-f90 genprime-f90.s
+	@echo
 
 genprime-c-icc: genprime.c
 	-icc -xSSE3 -O3 -pipe -ansi -pedantic -Wall -S -o genprime-c-icc.s genprime.c
 	-icc -xSSE3 -O3 -pipe -o genprime-c-icc genprime-c-icc.s
+	@echo
 
 genprime-c-llvm: genprime.c
 	-llvm-gcc -O3 -ansi -pedantic -Wall -emit-llvm -S -o genprime-c-llvm.ll genprime.c
 	-llvm-as genprime-c-llvm.ll
 	-cat genprime-c-llvm.bc | opt -std-compile-opts | llc > genprime-c-llvm.s
 	-llvm-gcc -O3 -pipe -o genprime-c-llvm genprime-c-llvm.s
+	@echo
 
 genprime-c-clang: genprime.c
 	-clang genprime.c -emit-llvm -o genprime-c-clang.ll
 	-llvm-as genprime-c-clang.ll
 	-cat genprime-c-clang.bc | opt -std-compile-opts | llc > genprime-c-clang.s
 	-gcc -O3 -pipe -o genprime-c-clang genprime-c-clang.s
+	@echo
 
 genprime-cpp: genprime.cpp
 	-g++ -O3 -pipe -std=gnu++98 -pedantic -Wall -S -o genprime-cpp.s genprime.cpp
 	-g++ -O3 -pipe -o genprime-cpp genprime-cpp.s
+	@echo
 
 genprime-cs: genprime-cs.exe
 
 genprime-cs.exe: genprime.cs
 	-gmcs -out:genprime-cs.exe -optimize+ genprime.cs
+	@echo
 
 genprime-py26: genprime.26.pyc
 
@@ -154,7 +163,9 @@ genprime-py30: genprime.30.pyc
 genprime.26.pyc: genprime.py
 	-ln -sf genprime.py genprime.26.py
 	-python2.6 -c "import py_compile; py_compile.compile(\"genprime.26.py\");"
+	@echo
 
 genprime.30.pyc: genprime.py
 	-ln -sf genprime.py genprime.30.py
 	-python3.0 -c "import py_compile; py_compile.compile(\"genprime.30.py\");"
+	@echo
