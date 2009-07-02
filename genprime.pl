@@ -1,9 +1,12 @@
 #!/usr/bin/perl
 
+use strict;
+use warnings;
+
 use Time::HiRes;
 
 sub isprime {
-	my $x, $lim, $y;
+	my ($x, $lim, $y);
 	$x = $_[0];
 	if ($x < 2) {
 		return 0;
@@ -37,7 +40,7 @@ sub isprime {
 }
 
 sub genprime {
-	my $max, $count, $current;
+	my ($max, $count, $current);
 	$max = $_[0];
 	$count = 0;
 	$current = 1;
@@ -52,7 +55,9 @@ sub genprime {
 	return $current - 1;
 }
 
-$argc = @ARGV + 1;
+my $argc = @ARGV + 1;
+
+my ($start, $stop);
 
 if ($argc > 1) {
 	$start = $ARGV[0] + 0;
@@ -65,12 +70,14 @@ if ($argc > 2) {
 	$stop = 0;
 }
 
+my ($x, $begin, $end, $duration, $last);
+
 for ($x = $start; $x < $stop; $x = $x + $start)
 {
 	$begin = Time::HiRes::time();
 	$last = genprime($x);
 	$end = Time::HiRes::time();
 	$duration = $end - $begin;
-	printf ("Found %8d primes in %10.5f seconds (last was %10d)\n",
-		$x, $duration, $last);
+	printf "Found %8d primes in %10.5f seconds (last was %10d)\n",
+		$x, $duration, $last;
 }
