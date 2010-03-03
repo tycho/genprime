@@ -4,8 +4,8 @@
 #include <sys/time.h>
 
 #ifdef USE_FLOATS
-typedef float prime_t;
-#	define MOD(x,y) fmodf((x),(y))
+typedef double prime_t;
+#	define MOD(x,y) fmod((x),(y))
 #else
 typedef unsigned long prime_t;
 #	define MOD(x,y) ((x) % (y))
@@ -32,7 +32,7 @@ BOOL isprime(unsigned long x)
 		if ((x - 1) % 6 != 0)
 			return FALSE;
 	v = (prime_t)x;
-	lim = (prime_t)(sqrt((float)v) + 1.0f);
+	lim = (prime_t)(sqrt((double)v) + 1.0f);
 	for (y = 3; y < lim; y += 2)
 	{
 		if (MOD(v, y) == 0)
