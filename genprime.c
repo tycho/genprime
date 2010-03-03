@@ -3,14 +3,21 @@
 #include <stdlib.h>
 #include <sys/time.h>
 
+#ifdef USE_FLOATS
+typedef float prime_t;
+#	define MOD(x,y) fmodf((x),(y))
+#else
 typedef unsigned long prime_t;
+#	define MOD(x,y) ((x) % (y))
+#endif
+
 typedef int BOOL;
 #define TRUE -1
 #define FALSE 0
 
-BOOL isprime(prime_t x)
+BOOL isprime(unsigned long x)
 {
-	prime_t lim, y;
+	prime_t lim, v, y;
 	if (x < 2)
 		return FALSE;
 	if (x < 4)
@@ -24,18 +31,19 @@ BOOL isprime(prime_t x)
 	if ((x + 1) % 6 != 0)
 		if ((x - 1) % 6 != 0)
 			return FALSE;
-	lim = (prime_t)(sqrt((double)x) + 1.0f);
+	v = (prime_t)x;
+	lim = (prime_t)(sqrt((float)v) + 1.0f);
 	for (y = 3; y < lim; y += 2)
 	{
-		if (x % y == 0)
+		if (MOD(v, y) == 0)
 			return FALSE;
 	}
 	return TRUE;
 }
 
-prime_t genprime(prime_t max)
+unsigned long genprime(unsigned long max)
 {
-	prime_t count = 0,
+	unsigned long count = 0,
 		current = 1;
 	while (count < max)
 	{
@@ -48,7 +56,7 @@ prime_t genprime(prime_t max)
 
 int main(int argc, char **argv)
 {
-	prime_t start = argc > 1 ? atol(argv[1]) : 0,
+	unsigned long start = argc > 1 ? atol(argv[1]) : 0,
 		stop = argc > 2 ? atol(argv[2]) + 1 : 0,
 		x, last;
 	struct timeval begin, end;
