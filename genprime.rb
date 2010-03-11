@@ -4,17 +4,14 @@ def isprime(x)
 	if x < 2
 		return 0
 	end
-	if x < 4
-		return 1
-	end
-	if x == 5
+	if x == 2
 		return 1
 	end
 	if x % 2 == 0
 		return 0
 	end
-	if x % 5 == 0
-		return 0
+	if x < 9
+		return 1
 	end
 	if (x + 1) % 6 != 0
 		if (x - 1) % 6 != 0

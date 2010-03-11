@@ -4,14 +4,12 @@ public class genprime {
 		long lim, y;
 		if (x < 2)
 			return false;
-		if (x < 4)
-			return true;
-		if (x == 5)
+		if (x == 2)
 			return true;
 		if (x % 2 == 0)
 			return false;
-		if (x % 5 == 0)
-			return false;
+		if (x < 9)
+			return true;
 		if ((x + 1) % 6 != 0)
 			if ((x - 1) % 6 != 0)
 				return false;
@@ -23,7 +21,7 @@ public class genprime {
 		}
 		return true;
 	}
-	
+
 	private static long genprime(long max)
 	{
 		long count = 0,

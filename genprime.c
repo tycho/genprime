@@ -13,14 +13,12 @@ BOOL isprime(prime_t x)
 	prime_t lim, y;
 	if (x < 2)
 		return FALSE;
-	if (x < 4)
-		return TRUE;
-	if (x == 5)
+	if (x == 2)
 		return TRUE;
 	if (x % 2 == 0)
 		return FALSE;
-	if (x % 5 == 0)
-		return FALSE;
+	if (x < 9)
+		return TRUE;
 	if ((x + 1) % 6 != 0)
 		if ((x - 1) % 6 != 0)
 			return FALSE;

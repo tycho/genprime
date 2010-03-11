@@ -7,14 +7,12 @@ from math import sqrt
 def isprime(x):
 	if x < 2:
 		return False
-	if x < 4:
-		return True
-	if x == 5:
+	if x == 2:
 		return True
 	if x % 2 == 0:
 		return False
-	if x % 5 == 0:
-		return False
+	if x < 9:
+		return True
 	if (x + 1) % 6 != 0:
 		if (x - 1) % 6 != 0:
 			return False

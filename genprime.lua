@@ -2,17 +2,14 @@ function isprime(x)
   if x < 2 then
 	return false
   end
-  if x < 4 then
-    return true
-  end
-  if x == 5 then
-    return true
+  if x == 2 then
+	return true
   end
   if x % 2 == 0 then
     return false
   end
-  if x % 5 == 0 then
-    return false
+  if x < 9 then
+    return true
   end
   if (x + 1) % 6 ~= 0 then
     if (x - 1) % 6 ~= 0 then

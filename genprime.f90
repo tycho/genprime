@@ -45,11 +45,7 @@ contains
       res = .false.
       return
     end if
-    if(x.lt.4) then
-      res = .true.
-      return
-    end if
-    if(x.eq.5) then
+    if(x.eq.2) then
       res = .true.
       return
     end if
@@ -57,8 +53,8 @@ contains
       res = .false.
       return
     end if
-    if(modulo(x,5).eq.0) then
-      res = .false.
+    if(x.lt.9) then
+      res = .true.
       return
     end if
     if(modulo(x + 1, 6) .ne. 0) then

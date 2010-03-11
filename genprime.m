@@ -17,14 +17,12 @@ typedef unsigned long prime_t;
 	prime_t lim, y;
 	if (x < 2)
 		return NO;
-	if (x < 4)
-		return YES;
-	if (x == 5)
+	if (x == 2)
 		return YES;
 	if (x % 2 == 0)
 		return NO;
-	if (x % 5 == 0)
-		return NO;
+	if (x < 9)
+		return YES;
 	if ((x + 1) % 6 != 0)
 		if ((x - 1) % 6 != 0)
 			return NO;
