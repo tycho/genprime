@@ -1,6 +1,6 @@
 ARGS=25000 100000
 
-all: genprime-java genprime-c genprime-f90 genprime-py26 genprime-py30 genprime-objc genprime-cpp genprime-cs genprime-c-llvm genprime-c-icc genprime-c-clang
+all: genprime-java genprime-c genprime-f90 genprime-py26 genprime-py30 genprime-objc genprime-cs genprime-c-llvm genprime-c-icc genprime-c-clang
 
 clean:
 	rm -f genprime.*.py *.pyc *.class genprime-* *.s *.bc *.ll *.rbc
@@ -14,8 +14,6 @@ version:
 	-mono --version
 	@echo
 	-gcc -v
-	@echo
-	-g++ -v
 	@echo
 	-gfortran -v
 	@echo
@@ -62,9 +60,6 @@ run: all
 	@echo
 	@echo "genprime (C Intel Compiler)"
 	@-./genprime-c-icc $(ARGS)
-	@echo
-	@echo "genprime (C++)"
-	@-./genprime-cpp $(ARGS)
 	@echo
 	@echo "genprime (C#)"
 	@-mono genprime-cs.exe $(ARGS)
@@ -143,11 +138,6 @@ genprime-c-clang: genprime.c
 	-llvm-as genprime-c-clang.ll
 	-cat genprime-c-clang.bc | opt -std-compile-opts | llc > genprime-c-clang.s
 	-gcc -O3 -pipe -o genprime-c-clang genprime-c-clang.s
-	@echo
-
-genprime-cpp: genprime.cpp
-	-g++ -O3 -pipe -std=gnu++98 -pedantic -Wall -S -o genprime-cpp.s genprime.cpp
-	-g++ -O3 -pipe -o genprime-cpp genprime-cpp.s
 	@echo
 
 genprime-cs: genprime-cs.exe
