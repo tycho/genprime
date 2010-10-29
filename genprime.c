@@ -20,7 +20,7 @@ typedef HRESULT (CALLBACK * P_DwmEnableComposition)   (BOOL   fEnable);
 #include <unistd.h>
 #endif
 
-/* #define USE_CACHE /* */
+#define USE_CACHE /* */
 
 typedef unsigned long prime_t;
 typedef int BOOL;
