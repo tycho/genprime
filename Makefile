@@ -112,7 +112,7 @@ genprime-objc: genprime.m
 	@echo
 
 genprime-c: genprime.c
-	-gcc -O3 -pipe -ansi -pedantic -Wall -S -o genprime-c.s genprime.c
+	-gcc -O3 -pipe -std=gnu99 -pedantic -Wall -S -o genprime-c.s genprime.c
 	-gcc -O3 -pipe -o genprime-c genprime-c.s
 	@echo
 
