@@ -1,6 +1,6 @@
 ARGS=25000 100000
 
-all: genprime-java genprime-c genprime-f90 genprime-py27 genprime-py30 genprime-objc genprime-cpp genprime-cs genprime-c-llvm genprime-c-icc genprime-c-clang
+all: genprime-java genprime-c genprime-f90 genprime-pyx genprime-py27 genprime-py30 genprime-objc genprime-cpp genprime-cs genprime-c-llvm genprime-c-icc genprime-c-clang
 
 clean:
 	rm -f genprime.*.py *.pyc *.class genprime-* *.s *.bc *.ll *.rbc
@@ -34,6 +34,8 @@ version:
 	-perl -v | grep built\ for
 	@echo
 	-php --version
+	@echo
+	-cython --version
 	@echo
 	-python2.7 --version
 	@echo
@@ -92,6 +94,9 @@ run: all
 	@echo
 	@echo "genprime (Python 2.7)"
 	@-python2.7 genprime.27.pyc $(ARGS)
+	@echo
+	@echo "genprime (Python 2.7 + Cython)"
+	@-./genprime-pyx $(ARGS)
 	@echo
 	@echo "genprime (Python 2.7 + Psyco)"
 	@-python2.7 genprime.27.pyc -p $(ARGS)
@@ -155,6 +160,10 @@ genprime-cs: genprime-cs.exe
 genprime-cs.exe: genprime.cs
 	-gmcs -out:genprime-cs.exe -optimize+ genprime.cs
 	@echo
+
+genprime-pyx: genprime.pyx
+	-cython --embed -o genprime-pyx.c genprime.pyx
+	-gcc -O3 -pipe $(shell pkg-config --cflags python) genprime-pyx.c -o genprime-pyx $(shell pkg-config --libs python)
 
 genprime-py27: genprime.27.pyc
 
