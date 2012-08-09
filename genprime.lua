@@ -1,3 +1,5 @@
+primes = {}
+
 function isprime(x)
   if x < 2 then
 	return false
@@ -17,7 +19,17 @@ function isprime(x)
 	end
   end
   local lim = math.sqrt(x) + 1.0
-  for y=3,lim,2 do
+  local last = 1
+  for z=1,#primes,1 do
+    last = primes[z]
+    if last >= lim then
+      return true
+    end
+    if x % last == 0 then
+      return false
+    end
+  end
+  for y=last+2,lim,2 do
     if x % y == 0 then
 	  return false
 	end
@@ -30,6 +42,9 @@ function genprime(mx)
   local current = 1
   while count < mx do
     if isprime(current) then
+      if #primes == 0 or primes[#primes] < current then
+        primes[#primes+1] = current
+      end
 	  count = count + 1
 	end
 	current = current + 1

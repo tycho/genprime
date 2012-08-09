@@ -1,49 +1,61 @@
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
+#include <vector>
 #include <sys/time.h>
 
 typedef unsigned long prime_t;
 
-class GenPrime
+std::vector<prime_t> primes;
+
+bool isprime(prime_t x)
 {
-public:
-	bool isprime(prime_t x)
-	{
-		prime_t lim, y;
-		if (x < 2)
-			return false;
-		if (x == 2)
-			return true;
-		if (x % 2 == 0)
-			return false;
-		if (x < 9)
-			return true;
-		if ((x + 1) % 6 != 0)
-			if ((x - 1) % 6 != 0)
-				return false;
-		lim = (prime_t)(sqrt((double)x) + 1.0f);
-		for (y = 3; y < lim; y += 2)
-		{
-			if (x % y == 0)
-				return false;
-		}
+	prime_t lim, y;
+	if (x < 2)
+		return false;
+	if (x == 2)
 		return true;
+	if (x % 2 == 0)
+		return false;
+	if (x < 9)
+		return true;
+	if ((x + 1) % 6 != 0)
+		if ((x - 1) % 6 != 0)
+			return false;
+	lim = (prime_t)(sqrt((double)x) + 1.0f);
+	y = 1;
+	for (std::vector<prime_t>::iterator iter = primes.begin();
+		 iter != primes.end();
+		 iter++) {
+		y = *iter;
+		if (y >= lim)
+			return true;
+		if (x % *iter == 0)
+			return false;
 	}
-	
-	prime_t genprime(prime_t max)
+	for (; y < lim; y += 2)
 	{
-		prime_t count = 0,
-			current = 1;
-		while (count < max)
-		{
-			if (isprime(current))
-				count++;
-			current++;
-		}
-		return current - 1;
+		if (x % y == 0)
+			return false;
 	}
-};
+	return true;
+}
+
+prime_t genprime(prime_t max)
+{
+	prime_t count = 0,
+		current = 1;
+	while (count < max)
+	{
+		if (isprime(current)) {
+			if (primes.size() < 1 || primes.back() < current)
+				primes.push_back(current);
+			count++;
+		}
+		current++;
+	}
+	return current - 1;
+}
 
 int main(int argc, char **argv)
 {
@@ -52,11 +64,10 @@ int main(int argc, char **argv)
 		x, last;
 	struct timeval begin, end;
 	double duration;
-	GenPrime gp;
 	for (x = start; x < stop; x += start)
 	{
 		gettimeofday(&begin, NULL);
-		last = gp.genprime(x);
+		last = genprime(x);
 		gettimeofday(&end, NULL);
 		duration = (double)(end.tv_sec - begin.tv_sec) +
 			((double)(end.tv_usec) - (double)(begin.tv_usec)) / 1000000.0;

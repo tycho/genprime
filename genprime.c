@@ -8,9 +8,13 @@ typedef int BOOL;
 #define TRUE -1
 #define FALSE 0
 
+prime_t primes[65536];
+const prime_t *primeEnd = &primes[65535];
+prime_t *primePtr = primes;
+
 BOOL isprime(prime_t x)
 {
-	prime_t lim, y;
+	prime_t lim, y, *p;
 	if (x < 2)
 		return FALSE;
 	if (x == 2)
@@ -23,7 +27,16 @@ BOOL isprime(prime_t x)
 		if ((x - 1) % 6 != 0)
 			return FALSE;
 	lim = (prime_t)(sqrt((double)x) + 1.0f);
-	for (y = 3; y < lim; y += 2)
+	y = 1;
+	for (p = primes; p != primePtr; p++)
+	{
+		y = *p;
+		if (y >= lim)
+			return TRUE;
+		if (x % y == 0)
+			return FALSE;
+	}
+	for (y += 2; y < lim; y += 2)
 	{
 		if (x % y == 0)
 			return FALSE;
@@ -37,8 +50,14 @@ prime_t genprime(prime_t max)
 		current = 1;
 	while (count < max)
 	{
-		if (isprime(current))
+		if (isprime(current)) {
+			if (primePtr < primeEnd &&
+			    (primePtr == primes || *(primePtr - 1) < current))
+			{
+				*primePtr++ = current;
+			}
 			count++;
+		}
 		current++;
 	}
 	return current - 1;

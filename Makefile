@@ -1,6 +1,6 @@
 ARGS=25000 100000
 
-all: genprime-java genprime-c genprime-f90 genprime-pyx genprime-py27 genprime-py30 genprime-objc genprime-cpp genprime-cs genprime-c-llvm genprime-c-icc genprime-c-clang
+all: genprime-c genprime-py27 genprime-py30 genprime-cpp genprime-c-llvm genprime-c-icc genprime-c-clang
 
 clean:
 	rm -f genprime.*.py *.pyc *.class genprime-* *.s *.bc *.ll *.rbc
@@ -9,19 +9,11 @@ version:
 	@echo
 	-uname -a
 	@echo
-	-gmcs --version
-	@echo
-	-mono --version
-	@echo
 	-gcc -v
 	@echo
 	-g++ -v
 	@echo
-	-gfortran -v
-	@echo
 	-icc -v
-	@echo
-	-java -version
 	@echo
 	-llc -version
 	@echo
@@ -30,10 +22,6 @@ version:
 	-lua -v
 	@echo
 	-luajit -v
-	@echo
-	-perl -v | grep built\ for
-	@echo
-	-php --version
 	@echo
 	-cython --version
 	@echo
@@ -68,29 +56,11 @@ run: all
 	@echo "genprime (C++)"
 	@-./genprime-cpp $(ARGS)
 	@echo
-	@echo "genprime (C#)"
-	@-mono genprime-cs.exe $(ARGS)
-	@echo
-	@echo "genprime (F90)"
-	@-./genprime-f90 $(ARGS)
-	@echo
-	@echo "genprime (Java)"
-	@-java genprime $(ARGS)
-	@echo
 	@echo "genprime (Lua)"
 	@-lua genprime.lua $(ARGS)
 	@echo
 	@echo "genprime (LuaJIT)"
 	@-luajit genprime.lua $(ARGS)
-	@echo
-	@echo "genprime (Objective-C)"
-	@-./genprime-objc $(ARGS)
-	@echo
-	@echo "genprime (Perl)"
-	@-perl genprime.pl $(ARGS)
-	@echo
-	@echo "genprime (PHP)"
-	@-php genprime.php $(ARGS)
 	@echo
 	@echo "genprime (Python 2.7)"
 	@-python2.7 genprime.27.pyc $(ARGS)
@@ -110,25 +80,9 @@ run: all
 	@echo "genprime (Ruby Rubinius)"
 	@-rbx genprime.rb $(ARGS)
 
-genprime-java: genprime.class
-
-genprime.class: genprime.java
-	-javac genprime.java
-	@echo
-
-genprime-objc: genprime.m
-	-/Developer/usr/bin/gcc -O3 -pipe -pedantic -S -o genprime-objc.s genprime.m
-	-/Developer/usr/bin/gcc -O3 -pipe -framework AppKit -o genprime-objc genprime-objc.s
-	@echo
-
 genprime-c: genprime.c
 	-gcc -O3 -pipe -ansi -pedantic -Wall -S -o genprime-c.s genprime.c
 	-gcc -O3 -pipe -o genprime-c genprime-c.s -lm
-	@echo
-
-genprime-f90: genprime.f90
-	-gfortran -O3 -pipe -pedantic -Wall -S -o genprime-f90.s genprime.f90
-	-gfortran -O3 -pipe -o genprime-f90 genprime-f90.s -lm
 	@echo
 
 genprime-c-icc: genprime.c
@@ -153,12 +107,6 @@ genprime-c-clang: genprime.c
 genprime-cpp: genprime.cpp
 	-g++ -O3 -pipe -std=gnu++98 -pedantic -Wall -S -o genprime-cpp.s genprime.cpp
 	-g++ -O3 -pipe -o genprime-cpp genprime-cpp.s -lm
-	@echo
-
-genprime-cs: genprime-cs.exe
-
-genprime-cs.exe: genprime.cs
-	-gmcs -out:genprime-cs.exe -optimize+ genprime.cs
 	@echo
 
 genprime-pyx: genprime.pyx

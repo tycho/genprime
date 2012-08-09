@@ -1,5 +1,7 @@
 #!/usr/bin/ruby
 
+$primes = Array.new
+
 def isprime(x)
 	if x < 2
 		return 0
@@ -19,7 +21,17 @@ def isprime(x)
 		end
 	end
 	lim=Math.sqrt(x).to_i+1
-	y = 3
+	y = 1
+	$primes.each do |v|
+		y = v
+		if y >= lim
+			return 1
+		end
+		if x % y == 0
+			return 0
+		end
+	end
+	y += 2
 	while y <= lim
 		if x % y == 0
 			return 0
@@ -34,6 +46,9 @@ def genprime(max)
 	current = 1
 	while count<max
 		if isprime(current) != 0
+			if $primes.length < 1 or $primes[-1] < current
+				$primes << current
+			end
 			count += 1
 		end
 		current += 1

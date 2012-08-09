@@ -4,6 +4,8 @@ import time
 import sys
 from math import sqrt
 
+primes = []
+
 def isprime(x):
 	if x < 2:
 		return False
@@ -16,8 +18,15 @@ def isprime(x):
 	if (x + 1) % 6 != 0:
 		if (x - 1) % 6 != 0:
 			return False
-	lim=sqrt(x)+1
-	for y in range(3, int(lim), 2):
+	lim = sqrt(x) + 1
+	last = 1
+	for y in primes:
+		last = y
+		if y > lim:
+			return True
+		if x % y == 0:
+			return False
+	for y in range(last + 2, int(lim), 2):
 		if x % y == 0:
 			return False
 	return True
@@ -27,6 +36,8 @@ def genprime(max):
 	current = 1
 	while count<max:
 		if isprime(current):
+			if len(primes) < 1 or primes[-1] < current:
+				primes.append(current)
 			count = count + 1
 		current = current + 1
 	return current - 1
