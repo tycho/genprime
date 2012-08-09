@@ -123,36 +123,36 @@ genprime-objc: genprime.m
 
 genprime-c: genprime.c
 	-gcc -O3 -pipe -ansi -pedantic -Wall -S -o genprime-c.s genprime.c
-	-gcc -O3 -pipe -o genprime-c genprime-c.s
+	-gcc -O3 -pipe -o genprime-c genprime-c.s -lm
 	@echo
 
 genprime-f90: genprime.f90
 	-gfortran -O3 -pipe -pedantic -Wall -S -o genprime-f90.s genprime.f90
-	-gfortran -O3 -pipe -o genprime-f90 genprime-f90.s
+	-gfortran -O3 -pipe -o genprime-f90 genprime-f90.s -lm
 	@echo
 
 genprime-c-icc: genprime.c
 	-icc -xSSE3 -O3 -pipe -ansi -pedantic -Wall -S -o genprime-c-icc.s genprime.c
-	-icc -xSSE3 -O3 -pipe -o genprime-c-icc genprime-c-icc.s
+	-icc -xSSE3 -O3 -pipe -o genprime-c-icc genprime-c-icc.s -lm
 	@echo
 
 genprime-c-llvm: genprime.c
 	-llvm-gcc -O3 -ansi -pedantic -Wall -emit-llvm -S -o genprime-c-llvm.ll genprime.c
 	-llvm-as genprime-c-llvm.ll
 	-cat genprime-c-llvm.bc | opt -std-compile-opts | llc > genprime-c-llvm.s
-	-llvm-gcc -O3 -pipe -o genprime-c-llvm genprime-c-llvm.s
+	-llvm-gcc -O3 -pipe -o genprime-c-llvm genprime-c-llvm.s -lm
 	@echo
 
 genprime-c-clang: genprime.c
 	-clang genprime.c -emit-llvm -o genprime-c-clang.ll
 	-llvm-as genprime-c-clang.ll
 	-cat genprime-c-clang.bc | opt -std-compile-opts | llc > genprime-c-clang.s
-	-gcc -O3 -pipe -o genprime-c-clang genprime-c-clang.s
+	-gcc -O3 -pipe -o genprime-c-clang genprime-c-clang.s -lm
 	@echo
 
 genprime-cpp: genprime.cpp
 	-g++ -O3 -pipe -std=gnu++98 -pedantic -Wall -S -o genprime-cpp.s genprime.cpp
-	-g++ -O3 -pipe -o genprime-cpp genprime-cpp.s
+	-g++ -O3 -pipe -o genprime-cpp genprime-cpp.s -lm
 	@echo
 
 genprime-cs: genprime-cs.exe
