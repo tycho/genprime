@@ -144,10 +144,7 @@ genprime-c-llvm: genprime.c
 	@echo
 
 genprime-c-clang: genprime.c
-	-clang genprime.c -emit-llvm -o genprime-c-clang.ll
-	-llvm-as genprime-c-clang.ll
-	-cat genprime-c-clang.bc | opt -std-compile-opts | llc > genprime-c-clang.s
-	-gcc -O3 -pipe -o genprime-c-clang genprime-c-clang.s -lm
+	-clang -O3 genprime.c -o genprime-c-clang -lm
 	@echo
 
 genprime-cpp: genprime.cpp
