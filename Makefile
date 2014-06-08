@@ -182,5 +182,5 @@ genprime.30.pyc: genprime.py
 	@echo
 
 genprime-swift: genprime.swift
-	-swift -sdk $(shell xcrun --show-sdk-path --sdk macosx) -o genprime-swift genprime.swift
+	-swift -O3 -sdk $(shell xcrun --show-sdk-path --sdk macosx) -o genprime-swift genprime.swift
 	@echo
