@@ -1,7 +1,6 @@
 extern crate time;
 
 use std::os;
-use std::str::FromStr;
 use std::num::Float;
 use std::iter;
 
@@ -58,13 +57,13 @@ fn main() {
     let mut   end: f64;
 
     start = if args.len() > 1 {
-        FromStr::from_str(&*os::args()[1]).unwrap()
+        args[1].parse().unwrap()
     } else {
         0
     };
 
     stop = if args.len() > 2 {
-        FromStr::from_str(&*os::args()[2]).unwrap()
+        args[2].parse().unwrap()
     } else {
         0
     };
