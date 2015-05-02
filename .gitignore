@@ -5,3 +5,6 @@
 genprime-*
 genprime.*.py
 *.rbc
+Cargo.lock
+target/
+
