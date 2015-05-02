@@ -1,8 +1,9 @@
+extern crate num;
 extern crate time;
 
-use std::os;
-use std::num::Float;
-use std::iter;
+use std::env;
+
+use num::iter;
 
 fn isprime(x: u64) -> bool {
     let lim: u64;
@@ -24,7 +25,7 @@ fn isprime(x: u64) -> bool {
             return false;
         }
     }
-    lim = Float::sqrt(((x as f64) + 1.0f64)) as u64;
+    lim = ((x as f64) + 1.0f64).sqrt() as u64;
     for y in iter::range_step_inclusive(3, lim, 2) {
         if x % y == 0 {
             return false;
@@ -49,7 +50,7 @@ fn genprime(max: u64) -> u64 {
 }
 
 fn main() {
-    let  args: Vec<String> = os::args();
+    let  args: Vec<String> = env::args().collect();
     let start: u64;
     let  stop: u64;
     let mut  last: u64;
