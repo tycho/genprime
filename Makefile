@@ -1,6 +1,6 @@
 ARGS=25000 100000
 
-all: genprime-java genprime-c genprime-f90 genprime-pyx genprime-py27 genprime-py30 genprime-objc genprime-cpp genprime-cs genprime-c-llvm genprime-c-icc genprime-c-clang genprime-swift genprime-crystal
+all: genprime-java genprime-c genprime-f90 genprime-pyx genprime-py27 genprime-py30 genprime-objc genprime-cpp genprime-cs genprime-c-llvm genprime-c-icc genprime-c-clang genprime-swift genprime-crystal genprime-pony
 
 clean:
 	rm -f genprime.*.py *.pyc *.class genprime-* *.s *.bc *.ll *.rbc
@@ -48,6 +48,8 @@ version:
 	-swift -v
 	@echo
 	-crystal --version
+	@echo
+	-ponyc --version
 	@echo
 
 run: all
@@ -119,6 +121,9 @@ run: all
 	@echo
 	@echo "genprime (Crystal)"
 	@-./genprime-crystal $(ARGS)
+	@echo
+	@echo "genprime (Pony)"
+	@-./genprime-pony1 $(ARGS)
 
 genprime-java: genprime.class
 
@@ -192,4 +197,10 @@ genprime-swift: genprime.swift
 
 genprime-crystal: genprime.cr
 	-crystal build --release -o genprime-crystal genprime.cr
+	@echo
+
+genprime-pony: genprime-pony1
+
+genprime-pony1: genprime-pony/genprime.pony
+	-ponyc genprime-pony
 	@echo
