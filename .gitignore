@@ -5,3 +5,4 @@
 genprime-*
 genprime.*.py
 *.rbc
+.crystal

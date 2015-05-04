@@ -1,6 +1,6 @@
 ARGS=25000 100000
 
-all: genprime-java genprime-c genprime-f90 genprime-pyx genprime-py27 genprime-py30 genprime-objc genprime-cpp genprime-cs genprime-c-llvm genprime-c-icc genprime-c-clang genprime-swift
+all: genprime-java genprime-c genprime-f90 genprime-pyx genprime-py27 genprime-py30 genprime-objc genprime-cpp genprime-cs genprime-c-llvm genprime-c-icc genprime-c-clang genprime-swift genprime-crystal
 
 clean:
 	rm -f genprime.*.py *.pyc *.class genprime-* *.s *.bc *.ll *.rbc
@@ -46,6 +46,8 @@ version:
 	-rbx -v
 	@echo
 	-swift -v
+	@echo
+	-crystal --version
 	@echo
 
 run: all
@@ -114,6 +116,9 @@ run: all
 	@echo
 	@echo "genprime (Swift)"
 	@-./genprime-swift $(ARGS)
+	@echo
+	@echo "genprime (Crystal)"
+	@-./genprime-crystal $(ARGS)
 
 genprime-java: genprime.class
 
@@ -183,4 +188,8 @@ genprime.30.pyc: genprime.py
 
 genprime-swift: genprime.swift
 	-swift -O3 -sdk $(shell xcrun --show-sdk-path --sdk macosx) -o genprime-swift genprime.swift
+	@echo
+
+genprime-crystal: genprime.cr
+	-crystal build --release -o genprime-crystal genprime.cr
 	@echo
