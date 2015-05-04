@@ -1,46 +1,46 @@
-def isprime(x)
-    if x < 2
+def isprime(x : UInt64)
+    if x < 2_u64
         return 0
     end
-    if x == 2
+    if x == 2_u64
         return 1
     end
-    if x % 2 == 0
+    if x % 2_u64 == 0_u64
         return 0
     end
-    if x < 9
+    if x < 9_u64
         return 1
     end
-    if (x + 1) % 6 != 0
-        if (x - 1) % 6 != 0
+    if (x + 1_u64) % 6_u64 != 0_u64
+        if (x - 1_u64) % 6_u64 != 0_u64
             return 0
         end
     end
-    lim = Math.sqrt(x).to_i + 1
-    y = 3
+    lim = (Math.sqrt(x) + 1.0).to_u64
+    y = 3_u64
     while y <= lim
-        if x % y == 0
+        if x % y == 0_u64
             return 0
         end
-        y += 2
+        y += 2_u64
     end
     return 1
 end
 
-def genprime(max)
-    count = 0
-    current = 1
+def genprime(max : UInt64)
+    count = 0_u64
+    current = 1_u64
     while count < max
         if isprime(current) != 0
-            count += 1
+            count += 1_u64
         end
-        current += 1
+        current += 1_u64
     end
-    return current - 1
+    return current - 1_u64
 end
 
-start = ARGV[0].to_i
-stop = ARGV[1].to_i + 1
+start = ARGV[0].to_u64
+stop = ARGV[1].to_u64 + 1_u64
 i = start
 if start == 0
     Process.exit
